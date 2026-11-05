@@ -18,11 +18,11 @@ The whole project is in one notebook, [volatility_band_width.ipynb](volatility_b
 **Rolling-window GBM.** The simplest fix is to re-estimate volatility every day from only the most recent $m$ daily returns, giving each of them equal weight. The band now widens in turbulent periods and narrows in calm ones. But equal weights create two problems: the band reacts slowly at the start of a shock, because the shock is diluted among many calm days, and it then stays wide for $m$ days afterwards, dropping suddenly when the shock leaves the window (the "ghost effect"). The window length $m = 160$ trading days was chosen on the calibration period only, as the window with the lowest miss rate.
 
 **Exponentially Weighted Moving Average (EWMA).** Instead of equal weights that are cut off after $m$ days, EWMA gives each past squared return a weight that decays geometrically: the return $i$ days ago receives weight $(1-\lambda)\lambda^{i-1}$. This reduces to a simple recursion,
-$$\sigma_t^2 = \lambda\,\sigma_{t-1}^2 + (1-\lambda)\, r_{t-1}^2,$$
+$$\sigma_t^2 = \lambda\ \sigma_{t-1}^2 + (1-\lambda)\ r_{t-1}^2,$$
 so recent shocks dominate and old ones fade smoothly, with no cliff. We use the RiskMetrics (J.P. Morgan/Reuters, 1996; see also Hull, OFOD) value $\lambda = 0.94$, a convention chosen to work well across many assets, which is fixed rather than estimated.
 
 **GARCH(1,1).** GARCH generalises EWMA in two ways:
-$$\sigma_t^2 = \omega + \alpha\, r_{t-1}^2 + \beta\, \sigma_{t-1}^2 .$$
+$$\sigma_t^2 = \omega + \alpha\ r_{t-1}^2 + \beta\ \sigma_{t-1}^2 .$$
 First, the reaction to yesterday's shock ($\alpha$) and the persistence of yesterday's volatility ($\beta$) are separate parameters, estimated from the data by maximum likelihood (here with the `arch` package, on 2005–2017). Second, the constant $\omega$ adds a pull towards a long-run variance $V_L = \omega/(1-\alpha-\beta)$: after a crisis, volatility is expected to drift back towards its long-run level (*mean reversion*). EWMA is the special case $\omega = 0$, $\alpha + \beta = 1$.
 
 **Testing the bands.** For each model and each test day, we record a *miss* when the actual return falls outside the band, giving one hit sequence per model. A reliable 95% band should be missed on about 5% of days, at random times. Two standard backtests check this:
