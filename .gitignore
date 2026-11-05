@@ -1,0 +1,7 @@
+#Files and folders that git will ignore while uploading to the github :)
+
+
+venv/
+garch.ipynb
+__pycache__/
+.ipynb_checkpoints/
