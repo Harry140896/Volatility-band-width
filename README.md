@@ -31,14 +31,16 @@ First, the reaction to yesterday's shock ($\alpha$) and the persistence of yeste
 
 We run both on the full test period and on sub-periods (a crisis year and a calm year).
 
-## Key results (test period 2018–2026, 2,222 days)
+## Key results (test period 2018–2026, 2,223 days)
 
 | Model | Miss rate | Kupiec (right count?) | Christoffersen (independent?) |
 |---|---|---|---|
-| Constant GBM | 4.9% | passes (p = 0.84) | **fails** (p < 0.001) |
+| Constant GBM | 4.9% | passes (p = 0.83) | **fails** (p < 0.001) |
 | Rolling GBM (m = 160) | 7.0% | **fails** (p < 0.001) | **fails** (p < 0.001) |
-| EWMA (λ = 0.94) | 5.7% | passes (p = 0.13) | passes, borderline (p = 0.085) |
+| EWMA (λ = 0.94) | 5.8% | passes (p = 0.11) | passes, borderline (p = 0.09) |
 | GARCH(1,1) | 5.2% | passes (p = 0.64) | passes (p = 0.69) |
+
+
 
 In 2020, constant GBM is missed on 15.0% of days (rejected: band too narrow); in 2023 on 0.0% of days (rejected: band too wide). After a miss, its next day is a miss 24.8% of the time, against 3.9% after a day without one.
 
