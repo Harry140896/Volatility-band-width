@@ -5,3 +5,5 @@ venv/
 garch.ipynb
 __pycache__/
 .ipynb_checkpoints/
+export_figures.py
+figures/.ipynb_checkpoints/
