@@ -1,11 +1,11 @@
 # Volatility Band Width
 **K. Mohamed Harith — Erdős Institute, Quant Finance Bootcamp (Fall 2026)**
 
-In this project we build 95% intervals for the next-day return of the S&P 500 (which we call *volatility bands*) using four volatility models: constant volatility GBM, rolling-window GBM, the Exponentially Weighted Moving Average (EWMA) and GARCH(1,1). We then test whether those bands can be trusted.
+In this project, we build 95% intervals for the next-day return of the S&P 500 (which we call *volatility bands*) using four volatility models: constant volatility GBM, rolling-window GBM, the Exponentially Weighted Moving Average (EWMA) and GARCH(1,1). We then test whether those bands can be trusted.
 
 The models are calibrated on *S&P 500 daily data* from 2005–2017 and tested out of sample on 2018–2026. Both periods contain a major crisis: 2008 in the calibration period, COVID-19 (2020) in the test period.
 
-**Main Observation:** getting the miss rate right is not the same as getting risk right. The constant-volatility GBM model is has miss rate almost exactly 5% of days over the entire test period, yet it fails in every regime and its misses cluster during crises. By contrast, the models that update volatility daily from the previous day’s return keep their misses close to 5% and spread out the misses over time.  
+**Main Observation:** getting the miss rate right is not the same as getting risk right. The constant-volatility GBM model has miss rate almost exactly 5% of days over the entire test period, yet it fails in every seasonal periods (like volatile or calm years) and its misses cluster during crises. By contrast, the models that update volatility daily from the previous day’s return keep their misses close to 5% and spread out the misses over time.  
 
 ## What's here
 
@@ -27,7 +27,7 @@ First, the reaction to yesterday's shock ($\alpha$) and the persistence of yeste
 
 **Testing the bands.** For each model and each test day, we record a *miss* when the actual return falls outside the band, giving one hit sequence per model. A reliable 95% band should be missed on about 5% of days, at random times. Two standard backtests check this:
 - **Kupiec's test (1995):** is the number of misses consistent with 5%? This checks whether the band has the right width on average: too many misses means it is too narrow (risk understated), too few means it is too wide (risk overstated).
-- **Christoffersen's test (1998):** are misses independent, or does a miss today make a miss tomorrow more likely? This checks for clustering of the misses.
+- **Christoffersen's test (1998):** Are misses independent, or does a miss today make a miss tomorrow more likely? This checks for clustering of the misses.
 
 We run both on the full test period and on sub-periods (a crisis year and a calm year).
 
